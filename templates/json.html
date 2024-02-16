@@ -9,6 +9,26 @@
 	<body>
         <pre id='content'></pre>
         <div id='storyData' style='display: none;'>{{STORY_DATA}}</div>
-        <script type='text/javascript'>document.getElementById('content').innerHTML = JSON.stringify({{COMMAND}}, null, 2);</script>
+            <script type='text/javascript'>
+        // Assuming twineToJSON returns a JavaScript object
+        var jsonData = {{COMMAND}};
+
+        // Convert JSON object to JSON string
+        var jsonString = JSON.stringify(jsonData, null, 2);
+
+        // Create a download link
+        var link = document.createElement('a');
+        link.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonString);
+        link.download = 'output.json';
+
+        // Append the link to the document
+        document.body.appendChild(link);
+
+        // Trigger the download
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
+    	</script>
 	</body>
 </html>
